@@ -3,6 +3,7 @@
 % ==========Preamble==========
 \usepackage{graphicx}
 \usepackage{apacite}
+\usepackage{url}
 \usepackage{fancyhdr}
 \usepackage{geometry}
 \usepackage[font=small,labelfont=bf,labelsep=quad,format=hang,textfont=it]{caption}
@@ -141,7 +142,13 @@ NeuroCuts很容易加入额外的启发式来改进它学习的决策树，一�
 强化学习一般用于描述和解决智能体在与环境的交互过程中通过学习策略以达成回报最大化或实现特定目标的问题，在信息论、博弈论、自动控制等领域都得到了广泛的讨论。这篇文章的作者将其应用于数据包分类领域并取得了良好的效果，为解决包分类问题提供了一个新的思路。\par
 通过阅读这篇文章，我们全面地了解了数据包分类问题的研究现状以及难点，明确了该领域当前面临的困境及应重点突破的方向。此外，我们还进一步加深了对深度强化学习的理解，尤其是在研究RL适用于数据包分类的三个特征以及NeuroCuts设计过程中的三个挑战和解决方案的过程中，我和我的队友就RL能解决什么问题以及如何使用RL解决问题进行了深入的思考与讨论。进一步认识RL奖励的延迟和稀疏两个特点以及学习如何将可变长度决策树状态编码为神经网络策略的输入将会对我们将来的学习与科研有所启发。
 \section{作者背景介绍}
-本文作者来自伯克利的RISElab。RISELab代表着实时智能安全执行（RISE），其定位是在分布式计算中解决下一个阶段，根据Databricks博客的说法：“Storica曾表示，这个新阶段是为了通过两个项目——Drizzle和Opaque，改进Spark并实现创新，其致力于构建开源框架、工具、算法，以便能够以更高的安全性，根据实时数据，决定要构建哪些实时应用。”
+\begin{itemize}
+    \item Eric Liang：加州大学伯克利分校RISELab成员之一，方向为强化学习的分布式系统和应用程序，曾在Google/Databricks工作。
+    \item Ion Stoica：加州大学伯克利分校EECS系的教授，RISELab成员之一。他从事云计算和网络计算机系统的研究，也是ACM院士。
+    \item Hang Zhu：约翰·霍普金斯大学计算机科学系的博士研究生，毕业于清华大学，是Xin Jin的学生，从事计算机网络的研究。
+    \item Xin Jin：约翰霍普斯金大学计算机系的助理教授，曾在加州大学伯克利分校AMPLab/RISELab工作，从事计算机网络和分布式系统领域的研究。
+\end{itemize}
+本文作者来自伯克利的RISElab(\url{https://rise.cs.berkeley.edu/})。RISELab代表着实时智能安全执行（RISE），其定位是在分布式计算中解决下一个阶段，根据Databricks博客的说法：“Storica曾表示，这个新阶段是为了通过两个项目——Drizzle和Opaque，改进Spark并实现创新，其致力于构建开源框架、工具、算法，以便能够以更高的安全性，根据实时数据，决定要构建哪些实时应用。”
 
 RISELab的初期目标是为了增强Spark的安全性与实时能力，因此，根据Databricks的信息，Drizzle项目的目标是将Spark Streaming的延迟降低一个数量级，同时提高其容错性。Opaque项目是为了增强Spark的动态与静态数据的加密功能。
 
